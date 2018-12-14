@@ -1,95 +1,93 @@
 package com.huawei.plm.daos.impl;
 
-import static plm.common.utils.CheckUtil.check;
+import com.huawei.common.utils.UserUtil;
+import com.huawei.plm.beans.Config;
+import com.huawei.plm.daos.ConfigDao;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
-import plm.beans.Config;
-import plm.common.utils.UserUtil;
-import plm.daos.ConfigDao;
+import static com.huawei.common.utils.CheckUtil.check;
 
 /**
  * 使用map实现的示例
- * 
+ *
  * @author 肖文杰  https://xwjie.github.io/PLMCodeTemplate/
  */
 @Component
 public class ConfigDaoMapImpl implements ConfigDao {
 
-	private final ConcurrentSkipListMap<Long, Config> configs = new ConcurrentSkipListMap<Long, Config>();
+    private final ConcurrentSkipListMap<Long, Config> configs = new ConcurrentSkipListMap<Long, Config>();
 
-	private static final AtomicLong idSequence = new AtomicLong(1000L);
+    private static final AtomicLong idSequence = new AtomicLong(1000L);
 
-	@PostConstruct
-	public void init() {
+    @PostConstruct
+    public void init() {
 
-	}
+    }
 
-	@Override
-	public Collection<Config> getAll() {
-		return configs.values();
-	}
+    @Override
+    public Collection<Config> getAll() {
+        return configs.values();
+    }
 
-	@Override
-	public long add(Config config) {
-		// 检查名称是否重复
-		check(null == getByName(config.getName()), "name.repeat");
+    @Override
+    public long add(Config config) {
+        // 检查名称是否重复
+        check(null == getByName(config.getName()), "name.repeat");
 
-		// 创建用户
-		config.setCreator(UserUtil.getUser());
+        // 创建用户
+        config.setCreator(UserUtil.getUser());
 
-		long id = idSequence.incrementAndGet();
+        long id = idSequence.incrementAndGet();
 
-		config.setId(id);
+        config.setId(id);
 
-		configs.put(id, config);
+        configs.put(id, config);
 
-		return id;
-	}
+        return id;
+    }
 
-	private Config getByName(String name) {
-		Collection<Config> values = configs.values();
+    private Config getByName(String name) {
+        Collection<Config> values = configs.values();
 
-		for (Config config : values) {
-			if (config.getName().equalsIgnoreCase(name)) {
-				return config;
-			}
-		}
+        for (Config config : values) {
+            if (config.getName().equalsIgnoreCase(name)) {
+                return config;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * 删除配置项
-	 */
-	@Override
-	public boolean delete(long id) {
-		Config config = configs.get(id);
+    /**
+     * 删除配置项
+     */
+    @Override
+    public boolean delete(long id) {
+        Config config = configs.get(id);
 
-		if (config == null) {
-			return false;
-		}
+        if (config == null) {
+            return false;
+        }
 
-		// 判断是否可以删除
-		check(canDelete(config), "no.permission");
+        // 判断是否可以删除
+        check(canDelete(config), "no.permission");
 
-		return configs.remove(id) != null;
-	}
+        return configs.remove(id) != null;
+    }
 
-	/**
-	 * 判断逻辑变化可能性大，抽取一个函数
-	 * 
-	 * @param config
-	 * @return
-	 */
-	private boolean canDelete(Config config) {
-		return UserUtil.getUser().equals(config.getCreator());
-	}
+    /**
+     * 判断逻辑变化可能性大，抽取一个函数
+     *
+     * @param config
+     * @return
+     */
+    private boolean canDelete(Config config) {
+        return UserUtil.getUser().equals(config.getCreator());
+    }
 
 }

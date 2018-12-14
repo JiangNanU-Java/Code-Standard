@@ -11,8 +11,24 @@ import lombok.Data;
 @XStreamAlias("Service")
 public class ServiceCfg {
 
-	@XStreamAsAttribute
-	private String name;
+    @XStreamAsAttribute
+    private String name;
 
-	private List<ConnectorCfg> connectors;
+    private List<ConnectorCfg> connectors;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<ConnectorCfg> getConnectors() {
+        return connectors;
+    }
+
+    public void setConnectors(List<ConnectorCfg> connectors) {
+        this.connectors = connectors;
+    }
 }

@@ -1,8 +1,8 @@
 package com.huawei.plm.daos;
 
-import java.util.Collection;
+import com.huawei.plm.beans.Config;
 
-import plm.beans.Config;
+import java.util.Collection;
 
 /**
  * 配置对象的crud接口

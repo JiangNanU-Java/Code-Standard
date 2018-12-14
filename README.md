@@ -4,9 +4,15 @@
 
 > 闲暇时更新，伴随个人能力的成长，将会不断地改进本项目，期待有志之士相互交流。
 
-## 层次划分
+## 工程目录
 
-#### controller 控制器层
+1. com.huawei : [晓风轻](https://github.com/xwjie/PLMCodeTemplate) 的 代码规范
+
+2. com.ten.standard : 代码规范整理
+
+## **com.ten.standard** 层次划分
+
+#### controller 控制器层 
 
 #### service 服务层
 
@@ -17,6 +23,14 @@
 #### config 配置
 
 #### util 工具
+
+#### aop 切面层
+
+#### exception 异常层
+
+#### filter 过滤器链
+
+#### resources 资源
 
 #### ...
 

@@ -19,4 +19,27 @@ public class ServerCfg {
 
 	private List<ServiceCfg> services;
 
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getShutDown() {
+        return shutDown;
+    }
+
+    public void setShutDown(String shutDown) {
+        this.shutDown = shutDown;
+    }
+
+    public List<ServiceCfg> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServiceCfg> services) {
+        this.services = services;
+    }
 }
